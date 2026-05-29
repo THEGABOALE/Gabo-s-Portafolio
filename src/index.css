@@ -1,0 +1,220 @@
+/* =========================================
+   --- ESTILOS GLOBALES Y NAVBAR ---
+   ========================================= */
+body {
+  margin: 0; padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #030305; 
+  color: #ffffff;
+  padding-bottom: 2000px; 
+}
+
+.glass-header {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 75px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 5%; box-sizing: border-box; z-index: 1000;
+  background: rgba(255, 255, 255, 0.02); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo { 
+  font-size: 1.5rem; 
+  font-weight: bold; 
+  letter-spacing: 2px; 
+  cursor: pointer; /* Cambia el cursor a una manito */
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.15); /* Se agranda un 15% */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Un brillo muy leve */
+}
+
+.nav-links a.hover-link {
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    display: inline-block;
+    padding: 10px 15px;
+    position: relative;
+    margin-left: 20px;
+    font-size: 1.15rem; 
+    font-weight: 500; 
+    transition: color 0.3s ease;
+}
+
+.nav-links a.hover-link:after {    
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: #00d2ff; 
+    box-shadow: 0 0 8px #00d2ff; 
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+    bottom: 0;
+}
+
+.nav-links a.hover-link:hover {
+    color: #00d2ff; 
+}
+
+.nav-links a.hover-link:hover:after { 
+    width: 100%; 
+    left: 0; 
+}
+
+/* =========================================
+   --- KARS COVER THEME (Portada Inamovible) ---
+   ========================================= */
+.kars-cover-section {
+  height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  position: relative; overflow: hidden;
+  background: #000000;
+  background-image: radial-gradient(circle at center, #050508 0%, #000000 100%);
+}
+
+.kars-content {
+  position: relative; z-index: 1; display: flex; flex-direction: column;
+  align-items: center; width: 100%; padding-top: 80px; 
+}
+
+.kars-wrapper {
+  margin-bottom: 30px; 
+  animation: karsDrift 15s ease-in-out infinite;
+  will-change: transform;
+}
+
+.kars-image {
+  width: 450px; max-width: 60vw;
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.15));
+}
+
+.quote-wrapper {
+  margin-bottom: 40px; 
+  animation: quoteFloat 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+.quote-image {
+  width: 550px; max-width: 90vw;
+}
+
+/* --- ANIMACIONES DE FLOTACIÓN ESPACIAL --- */
+@keyframes karsDrift {
+  0% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
+  25% { transform: translate(25px, -30px) rotate(2deg) scale(1.02); }
+  50% { transform: translate(-15px, 15px) rotate(-1deg) scale(1); }
+  75% { transform: translate(10px, -15px) rotate(1deg) scale(0.98); }
+  100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
+}
+
+@keyframes quoteFloat {
+  0% { transform: translate(0px, 0px) rotate(0deg); }
+  33% { transform: translate(-10px, 20px) rotate(-0.5deg); } 
+  66% { transform: translate(10px, -15px) rotate(0.5deg); } 
+  100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+/* =========================================
+   --- FONDO ESPACIAL ANIMADO ---
+   ========================================= */
+
+@keyframes animStar {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-2000px); }
+}
+
+#stars, #stars2, #stars3 {
+  position: absolute;
+  top: 0; left: 0;
+  background: transparent;
+  z-index: 0;
+}
+
+#stars::after, #stars2::after, #stars3::after {
+  content: " ";
+  position: absolute;
+  top: 2000px; 
+  background: transparent;
+}
+
+/* Capa 1: Estrellas pequeñas (Densidad Alta) */
+#stars {
+  width: 1px; height: 1px;
+  box-shadow: 150px 200px #FFF, 345px 543px #FFF, 843px 123px #FFF, 120px 432px #FFF, 543px 890px #FFF, 934px 234px #FFF, 1000px 500px #FFF, 1200px 100px #FFF, 800px 700px #FFF, 1400px 300px #FFF, 200px 800px #FFF, 1700px 900px #FFF, 600px 100px #FFF, 1900px 500px #FFF, 50px 600px #FFF, 1100px 1800px #FFF, 300px 1500px #FFF, 1600px 1200px #FFF, 950px 850px #FFF, 1350px 1450px #FFF, 1800px 200px #FFF, 400px 1000px #FFF, 850px 1900px #FFF, 1250px 1100px #FFF, 750px 1600px #FFF, 100px 1300px #FFF, 1550px 750px #FFF, 1950px 1750px #FFF, 250px 50px #FFF, 650px 1250px #FFF, 1450px 1850px #FFF, 1750px 1350px #FFF, 50px 1950px #FFF, 800px 150px #FFF, 1150px 950px #FFF;
+  animation: animStar 50s linear infinite;
+}
+#stars::after {
+  box-shadow: 150px 200px #FFF, 345px 543px #FFF, 843px 123px #FFF, 120px 432px #FFF, 543px 890px #FFF, 934px 234px #FFF, 1000px 500px #FFF, 1200px 100px #FFF, 800px 700px #FFF, 1400px 300px #FFF, 200px 800px #FFF, 1700px 900px #FFF, 600px 100px #FFF, 1900px 500px #FFF, 50px 600px #FFF, 1100px 1800px #FFF, 300px 1500px #FFF, 1600px 1200px #FFF, 950px 850px #FFF, 1350px 1450px #FFF, 1800px 200px #FFF, 400px 1000px #FFF, 850px 1900px #FFF, 1250px 1100px #FFF, 750px 1600px #FFF, 100px 1300px #FFF, 1550px 750px #FFF, 1950px 1750px #FFF, 250px 50px #FFF, 650px 1250px #FFF, 1450px 1850px #FFF, 1750px 1350px #FFF, 50px 1950px #FFF, 800px 150px #FFF, 1150px 950px #FFF;
+}
+
+/* Capa 2: Estrellas medianas (Densidad Media) */
+#stars2 {
+  width: 2px; height: 2px;
+  box-shadow: 250px 100px #FFF, 445px 643px #FFF, 743px 323px #FFF, 220px 532px #FFF, 643px 990px #FFF, 834px 134px #FFF, 1100px 600px #FFF, 1300px 200px #FFF, 900px 800px #FFF, 1500px 400px #FFF, 300px 900px #FFF, 1800px 1000px #FFF, 700px 200px #FFF, 1950px 600px #FFF, 150px 700px #FFF, 1200px 1600px #FFF, 400px 1400px #FFF, 1700px 1300px #FFF, 1050px 750px #FFF, 80px 1850px #FFF, 1650px 150px #FFF, 1850px 1650px #FFF, 500px 1150px #FFF, 1400px 950px #FFF, 950px 1850px #FFF;
+  animation: animStar 100s linear infinite;
+}
+#stars2::after {
+  box-shadow: 250px 100px #FFF, 445px 643px #FFF, 743px 323px #FFF, 220px 532px #FFF, 643px 990px #FFF, 834px 134px #FFF, 1100px 600px #FFF, 1300px 200px #FFF, 900px 800px #FFF, 1500px 400px #FFF, 300px 900px #FFF, 1800px 1000px #FFF, 700px 200px #FFF, 1950px 600px #FFF, 150px 700px #FFF, 1200px 1600px #FFF, 400px 1400px #FFF, 1700px 1300px #FFF, 1050px 750px #FFF, 80px 1850px #FFF, 1650px 150px #FFF, 1850px 1650px #FFF, 500px 1150px #FFF, 1400px 950px #FFF, 950px 1850px #FFF;
+}
+
+/* Capa 3: Estrellas grandes (Brillantes) */
+#stars3 {
+  width: 3px; height: 3px;
+  box-shadow: 50px 300px #FFF, 145px 843px #FFF, 543px 123px #FFF, 320px 732px #FFF, 843px 190px #FFF, 634px 434px #FFF, 1300px 800px #FFF, 1500px 300px #FFF, 1100px 900px #FFF, 1700px 500px #FFF, 500px 1000px #FFF, 1900px 1100px #FFF, 900px 300px #FFF, 1850px 700px #FFF, 250px 800px #FFF, 1400px 1700px #FFF, 600px 1500px #FFF, 1900px 1400px #FFF, 100px 1900px #FFF, 1800px 150px #FFF;
+  animation: animStar 150s linear infinite;
+  opacity: 0.9; 
+}
+#stars3::after {
+  box-shadow: 50px 300px #FFF, 145px 843px #FFF, 543px 123px #FFF, 320px 732px #FFF, 843px 190px #FFF, 634px 434px #FFF, 1300px 800px #FFF, 1500px 300px #FFF, 1100px 900px #FFF, 1700px 500px #FFF, 500px 1000px #FFF, 1900px 1100px #FFF, 900px 300px #FFF, 1850px 700px #FFF, 250px 800px #FFF, 1400px 1700px #FFF, 600px 1500px #FFF, 1900px 1400px #FFF, 100px 1900px #FFF, 1800px 150px #FFF;
+}
+
+/* =========================================
+   --- HOME SECTION (El nuevo Hero deslizable) ---
+   ========================================= */
+.hero-section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 75px; 
+}
+
+.hero-title {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+  letter-spacing: 2px;
+}
+
+.hero-subtitle {
+  font-size: 1.8rem;
+  color: #00d2ff; 
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.hero-desc {
+  font-size: 1.2rem;
+  color: #aaaaaa;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
