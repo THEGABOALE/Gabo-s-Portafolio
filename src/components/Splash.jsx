@@ -12,14 +12,15 @@ function Splash() {
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    
+
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [navigate])
 
+  // También se puede entrar tocando/haciendo click (fallback para mobile sin teclado)
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#000', color: '#fff' }}>
-      <h1>This is Gabo's Folio</h1>
-      <p style={{ marginTop: '20px', opacity: 0.7, animation: 'blink 1.5s infinite' }}>[ ENTER ]</p>
+    <div className="splash-screen" onClick={() => navigate('/gabo')} role="button" tabIndex={0}>
+      <h1 className="splash-title">This is Gabo's Folio</h1>
+      <p className="splash-enter">Toca o presiona [ ENTER ]</p>
     </div>
   )
 }
