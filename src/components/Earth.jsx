@@ -30,8 +30,9 @@ function Earth() {
     const sphereCtx = sphereCanvas.getContext('2d')
     let sphereImg = null
 
-    // Dirección del sol: casi de frente, un poco desde la izquierda (terminador suave)
-    const L = normalize(-0.55, 0.16, 0.82)
+    // Dirección del sol: bastante de lado (desde arriba-izquierda) para que haya
+    // un terminador visible que le dé volumen esférico, no un disco plano
+    const L = normalize(-0.72, 0.28, 0.48)
 
     function normalize(x, y, z) {
       const m = Math.hypot(x, y, z)
@@ -76,12 +77,14 @@ function Earth() {
           const v = 0.5 - lat / Math.PI
           const ty = Math.min(texH - 1, Math.max(0, (v * texH) | 0))
           proj.texRow[i] = ty * texW
-          // iluminación: difusa + ambiente + oscurecimiento del limbo
+          // iluminación: difusa con terminador suave + poco ambiente (lado noche
+          // oscuro = volumen) + oscurecimiento del limbo para redondear la esfera
           let diff = nx * L[0] + ny * L[1] + nz * L[2]
           if (diff < 0) diff = 0
-          const ambient = 0.3
+          diff = Math.pow(diff, 0.85) // suaviza la línea del terminador
+          const ambient = 0.12
           let shade = ambient + (1 - ambient) * diff
-          shade *= 0.6 + 0.4 * z
+          shade *= 0.5 + 0.5 * z
           proj.light[i] = shade
         }
       }
@@ -129,14 +132,14 @@ function Earth() {
 
       ctx.clearRect(0, 0, size, size)
       if (map && proj) {
-        // Halo atmosférico
-        const g = ctx.createRadialGradient(center, center, R * 0.92, center, center, R * 1.22)
-        g.addColorStop(0, 'rgba(90, 190, 255, 0.35)')
-        g.addColorStop(0.5, 'rgba(60, 170, 255, 0.14)')
-        g.addColorStop(1, 'rgba(60, 170, 255, 0)')
+        // Halo atmosférico sutil (capa fina, que se note sin iluminar de más)
+        const g = ctx.createRadialGradient(center, center, R * 0.97, center, center, R * 1.13)
+        g.addColorStop(0, 'rgba(120, 195, 255, 0.16)')
+        g.addColorStop(0.55, 'rgba(90, 175, 255, 0.06)')
+        g.addColorStop(1, 'rgba(90, 175, 255, 0)')
         ctx.fillStyle = g
         ctx.beginPath()
-        ctx.arc(center, center, R * 1.22, 0, Math.PI * 2)
+        ctx.arc(center, center, R * 1.13, 0, Math.PI * 2)
         ctx.fill()
         // El planeta
         ctx.drawImage(sphereCanvas, 0, 0)

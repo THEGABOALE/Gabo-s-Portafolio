@@ -248,12 +248,12 @@ body {
   pointer-events: none;
 }
 
-/* Tierra en perspectiva: pequeña, a la derecha, flotando lento (Kars en órbita) */
+/* Tierra en perspectiva: lejana y pequeña, a la derecha, flotando lento (Kars en órbita) */
 .earth-canvas {
   position: absolute;
-  top: 18%;
-  right: 4%;
-  width: clamp(130px, 18vw, 240px);
+  top: 15%;
+  right: 5%;
+  width: clamp(115px, 14vw, 200px);
   aspect-ratio: 1 / 1;
   height: auto;
   z-index: 0;
