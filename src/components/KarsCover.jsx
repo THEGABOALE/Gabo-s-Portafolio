@@ -1,12 +1,12 @@
-import React from 'react'
+import Starfield from './Starfield'
+import Earth from './Earth'
 
 function KarsCover() {
   return (
     <section id="kars-cover" className="kars-cover-section manga-theme">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-      
+      <Starfield />
+      <Earth />
+
       <div className="kars-content">
         <div className="kars-wrapper">
           <img src="/kars.png" alt="Kars floating" className="kars-image" />

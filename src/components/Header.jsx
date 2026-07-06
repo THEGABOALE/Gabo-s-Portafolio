@@ -17,7 +17,7 @@ function Header({ onNavClick, onLogoClick }) {
   return (
     <header className='glass-header'>
       {/* Agregamos el evento onClick al logo */}
-      <div className='logo' onClick={handleLogo}>GABO</div>
+      <div className='logo' onClick={handleLogo}>GABO<span className='logo-dev'>.dev</span></div>
 
       {/* Botón hamburguesa: solo visible en mobile vía CSS */}
       <button

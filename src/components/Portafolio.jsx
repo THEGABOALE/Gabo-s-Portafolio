@@ -16,6 +16,8 @@ function Portafolio() {
   // Bloquea el scroll mientras la portada de Kars esté activa
   useEffect(() => {
     if (showKars) {
+      // Volvemos arriba: si venías scrolleado abajo, Kars debe verse centrado, no el vacío
+      window.scrollTo(0, 0);
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';

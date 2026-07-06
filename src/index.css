@@ -67,6 +67,13 @@ body {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Un brillo muy leve */
 }
 
+/* Sufijo ".dev" en verde neón, con glow al tono del cian para que combine */
+.logo-dev {
+  color: #00ff9c;
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(0, 255, 156, 0.5);
+}
+
 .nav-links a.hover-link {
     color: #fff;
     text-decoration: none;
@@ -156,24 +163,41 @@ body {
 }
 
 .kars-wrapper {
-  margin-bottom: 30px; 
+  position: relative;
+  margin-bottom: 30px;
   animation: karsDrift 15s ease-in-out infinite;
   will-change: transform;
+}
+
+/* Aura/nebulosa muy sutil detrás de Kars para darle profundidad (viaja con él) */
+.kars-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 130%; height: 130%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(0, 210, 255, 0.12) 0%, rgba(0, 210, 255, 0.05) 40%, transparent 70%);
+  filter: blur(25px);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .kars-image {
   width: 450px; max-width: 60vw;
   filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.15));
+  /* Entrada cinematográfica (una vez) + brillo que respira (infinito, tras la entrada) */
+  animation: karsEnter 1.2s ease-out both, karsGlow 8s ease-in-out 1.2s infinite;
 }
 
 .quote-wrapper {
-  margin-bottom: 40px; 
+  margin-bottom: 40px;
   animation: quoteFloat 20s ease-in-out infinite;
   will-change: transform;
 }
 
 .quote-image {
   width: 550px; max-width: 90vw;
+  animation: quoteEnter 1s ease-out 0.5s both; /* Aparece un instante después de Kars */
 }
 
 /* --- ANIMACIONES DE FLOTACIÓN ESPACIAL --- */
@@ -187,63 +211,61 @@ body {
 
 @keyframes quoteFloat {
   0% { transform: translate(0px, 0px) rotate(0deg); }
-  33% { transform: translate(-10px, 20px) rotate(-0.5deg); } 
-  66% { transform: translate(10px, -15px) rotate(0.5deg); } 
+  33% { transform: translate(-10px, 20px) rotate(-0.5deg); }
+  66% { transform: translate(10px, -15px) rotate(0.5deg); }
   100% { transform: translate(0px, 0px) rotate(0deg); }
 }
 
+/* --- ENTRADA CINEMATOGRÁFICA Y BRILLO DE KARS --- */
+@keyframes karsEnter {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes karsGlow {
+  0%, 100% { filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.15)); }
+  50%      { filter: drop-shadow(0 0 30px rgba(0, 210, 255, 0.30)); }
+}
+
+@keyframes quoteEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* =========================================
-   --- FONDO ESPACIAL ANIMADO ---
+   --- FONDO ESPACIAL ANIMADO (Canvas) ---
    ========================================= */
 
-@keyframes animStar {
-  from { transform: translateY(0px); }
-  to { transform: translateY(-2000px); }
-}
-
-#stars, #stars2, #stars3 {
+/* El campo estelar se dibuja en <canvas> (componente Starfield) para tener
+   parpadeo y parallax por estrella. Solo posicionamos el lienzo detrás. */
+.starfield-canvas {
   position: absolute;
-  top: 0; left: 0;
-  background: transparent;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
   z-index: 0;
+  pointer-events: none;
 }
 
-#stars::after, #stars2::after, #stars3::after {
-  content: " ";
+/* Tierra en perspectiva: pequeña, a la derecha, flotando lento (Kars en órbita) */
+.earth-canvas {
   position: absolute;
-  top: 2000px; 
-  background: transparent;
+  top: 18%;
+  right: 4%;
+  width: clamp(130px, 18vw, 240px);
+  aspect-ratio: 1 / 1;
+  height: auto;
+  z-index: 0;
+  pointer-events: none;
+  animation: earthFloat 22s ease-in-out infinite;
+  will-change: transform;
 }
 
-/* Capa 1: Estrellas pequeñas (Densidad Alta) */
-#stars {
-  width: 1px; height: 1px;
-  box-shadow: 150px 200px #FFF, 345px 543px #FFF, 843px 123px #FFF, 120px 432px #FFF, 543px 890px #FFF, 934px 234px #FFF, 1000px 500px #FFF, 1200px 100px #FFF, 800px 700px #FFF, 1400px 300px #FFF, 200px 800px #FFF, 1700px 900px #FFF, 600px 100px #FFF, 1900px 500px #FFF, 50px 600px #FFF, 1100px 1800px #FFF, 300px 1500px #FFF, 1600px 1200px #FFF, 950px 850px #FFF, 1350px 1450px #FFF, 1800px 200px #FFF, 400px 1000px #FFF, 850px 1900px #FFF, 1250px 1100px #FFF, 750px 1600px #FFF, 100px 1300px #FFF, 1550px 750px #FFF, 1950px 1750px #FFF, 250px 50px #FFF, 650px 1250px #FFF, 1450px 1850px #FFF, 1750px 1350px #FFF, 50px 1950px #FFF, 800px 150px #FFF, 1150px 950px #FFF;
-  animation: animStar 50s linear infinite;
-}
-#stars::after {
-  box-shadow: 150px 200px #FFF, 345px 543px #FFF, 843px 123px #FFF, 120px 432px #FFF, 543px 890px #FFF, 934px 234px #FFF, 1000px 500px #FFF, 1200px 100px #FFF, 800px 700px #FFF, 1400px 300px #FFF, 200px 800px #FFF, 1700px 900px #FFF, 600px 100px #FFF, 1900px 500px #FFF, 50px 600px #FFF, 1100px 1800px #FFF, 300px 1500px #FFF, 1600px 1200px #FFF, 950px 850px #FFF, 1350px 1450px #FFF, 1800px 200px #FFF, 400px 1000px #FFF, 850px 1900px #FFF, 1250px 1100px #FFF, 750px 1600px #FFF, 100px 1300px #FFF, 1550px 750px #FFF, 1950px 1750px #FFF, 250px 50px #FFF, 650px 1250px #FFF, 1450px 1850px #FFF, 1750px 1350px #FFF, 50px 1950px #FFF, 800px 150px #FFF, 1150px 950px #FFF;
-}
-
-/* Capa 2: Estrellas medianas (Densidad Media) */
-#stars2 {
-  width: 2px; height: 2px;
-  box-shadow: 250px 100px #FFF, 445px 643px #FFF, 743px 323px #FFF, 220px 532px #FFF, 643px 990px #FFF, 834px 134px #FFF, 1100px 600px #FFF, 1300px 200px #FFF, 900px 800px #FFF, 1500px 400px #FFF, 300px 900px #FFF, 1800px 1000px #FFF, 700px 200px #FFF, 1950px 600px #FFF, 150px 700px #FFF, 1200px 1600px #FFF, 400px 1400px #FFF, 1700px 1300px #FFF, 1050px 750px #FFF, 80px 1850px #FFF, 1650px 150px #FFF, 1850px 1650px #FFF, 500px 1150px #FFF, 1400px 950px #FFF, 950px 1850px #FFF;
-  animation: animStar 100s linear infinite;
-}
-#stars2::after {
-  box-shadow: 250px 100px #FFF, 445px 643px #FFF, 743px 323px #FFF, 220px 532px #FFF, 643px 990px #FFF, 834px 134px #FFF, 1100px 600px #FFF, 1300px 200px #FFF, 900px 800px #FFF, 1500px 400px #FFF, 300px 900px #FFF, 1800px 1000px #FFF, 700px 200px #FFF, 1950px 600px #FFF, 150px 700px #FFF, 1200px 1600px #FFF, 400px 1400px #FFF, 1700px 1300px #FFF, 1050px 750px #FFF, 80px 1850px #FFF, 1650px 150px #FFF, 1850px 1650px #FFF, 500px 1150px #FFF, 1400px 950px #FFF, 950px 1850px #FFF;
-}
-
-/* Capa 3: Estrellas grandes (Brillantes) */
-#stars3 {
-  width: 3px; height: 3px;
-  box-shadow: 50px 300px #FFF, 145px 843px #FFF, 543px 123px #FFF, 320px 732px #FFF, 843px 190px #FFF, 634px 434px #FFF, 1300px 800px #FFF, 1500px 300px #FFF, 1100px 900px #FFF, 1700px 500px #FFF, 500px 1000px #FFF, 1900px 1100px #FFF, 900px 300px #FFF, 1850px 700px #FFF, 250px 800px #FFF, 1400px 1700px #FFF, 600px 1500px #FFF, 1900px 1400px #FFF, 100px 1900px #FFF, 1800px 150px #FFF;
-  animation: animStar 150s linear infinite;
-  opacity: 0.9; 
-}
-#stars3::after {
-  box-shadow: 50px 300px #FFF, 145px 843px #FFF, 543px 123px #FFF, 320px 732px #FFF, 843px 190px #FFF, 634px 434px #FFF, 1300px 800px #FFF, 1500px 300px #FFF, 1100px 900px #FFF, 1700px 500px #FFF, 500px 1000px #FFF, 1900px 1100px #FFF, 900px 300px #FFF, 1850px 700px #FFF, 250px 800px #FFF, 1400px 1700px #FFF, 600px 1500px #FFF, 1900px 1400px #FFF, 100px 1900px #FFF, 1800px 150px #FFF;
+@keyframes earthFloat {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(-14px, 18px); }
+  100% { transform: translate(0, 0); }
 }
 
 /* =========================================
